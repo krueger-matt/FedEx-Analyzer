@@ -1,5 +1,7 @@
 import re
 import csv
+import os
+import platform
 from mechanize import Browser
 from bs4 import BeautifulSoup
 from PIL import Image
@@ -8,6 +10,13 @@ from PIL import Image
 # def FedExAnalyzer():
 
 print ("Starting...")
+
+userOS = platform.system()
+
+if userOS == "Windows":
+    desktopLocation = os.path.expanduser("~") + "\\Desktop\\"
+else:
+    desktopLocation = os.path.expanduser("~") + "/Desktop/"
 
 #Initialize empty zipcode list (zips)
 zips = []
@@ -55,7 +64,7 @@ for zipcode in zips:
 
 #Analyze pixel colors    
     # im = Image.open("/Users/mattkrueger/Desktop/FedEx/" + zipcode + ".png") #Mac code
-    im = Image.open("C:/Users/m.krueger/Desktop/FedEx/" + zipcode + ".png") #Windows code
+    im = Image.open(desktopLocation + "\\FedEx\\" + zipcode + ".png") #Windows code
 
     for pixel in im.getdata():
         if pixel == (255,0,128):
