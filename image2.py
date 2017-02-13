@@ -1,5 +1,6 @@
 import re
 import csv
+import sys
 import os
 import platform
 from mechanize import Browser
@@ -44,6 +45,12 @@ for zipcode in zips:
 #Open virtual browser, select the form, put in the zipcode, click view map
     br = Browser()
     br.open("http://www.fedex.com/grd/maps/ShowMapEntry.do")
+    
+# br.title is the title of hte page. [-4:] is the 4 right most characters of that. If they are equal to "Down" then abort the process
+    if br.title()[-4:] == "Down":
+        print "System down, aborting process!"
+        sys.exit()
+    
     br.select_form("mapEntryForm")
     br["originZip"] = zipcode
     response = br.submit(label="View map")
